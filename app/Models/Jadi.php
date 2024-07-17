@@ -19,6 +19,6 @@ class Jadi extends Model
 
   public function transaksi()
   {
-    return $this->belongsTo(Transaksi::class, 'jadi_id', 'id');
+    return $this->hasMany(Transaksi::class, 'jadi_id');
   }
 }

@@ -21,16 +21,16 @@ class Transaksi extends Model
 
   public function baku()
   {
-    return $this->hasOne(Baku::class, 'id', 'baku_id');
+    return $this->belongsTo(Baku::class,  'baku_id');
   }
 
   public function suplier()
   {
-    return $this->hasOne(Suplier::class, 'id', 'suplier_id');
+    return $this->belongsTo(Suplier::class,  'suplier_id');
   }
 
   public function jadi()
   {
-    return $this->hasOne(Jadi::class, 'id', 'jadi_id');
+    return $this->belongsTo(Jadi::class,  'jadi_id');
   }
 }

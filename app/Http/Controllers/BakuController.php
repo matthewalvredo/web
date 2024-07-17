@@ -11,9 +11,10 @@ class BakuController extends Controller
 {
   public function index()
   {
-    $tran = Transaksi::with('baku', 'suplier')
-      ->where('jadi_id', '==', 0)
-      ->where('status', '==', 0)
+    $tran = Transaksi::with('baku')
+      ->where('jadi_id', 0)
+      ->where('type', 0)
+      ->where('status', 0)
       ->get();
 
     return view('baku', compact('tran'));

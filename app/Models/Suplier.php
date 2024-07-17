@@ -17,6 +17,6 @@ class Suplier extends Model
 
   public function transaksi()
   {
-    return $this->belongsTo(Transaksi::class, 'suplier_id', 'id');
+    return $this->hasMany(Transaksi::class, 'suplier_id');
   }
 }

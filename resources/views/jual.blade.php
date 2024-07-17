@@ -48,7 +48,7 @@
                         </td>
                         <td class="d-flex align-items-center">
                           <a href="{{ route('sell', $i->id) }}" class="btn btn-primary btn-sm me-2"
-                            style="display:{{ Auth::user()->role == '3' ? 'none' : '' }}">Edit</a>
+                            style="display:{{ Auth::user()->role == '1' ? '' : 'none' }}">Edit</a>
                         </td>
                       </tr>
                     @endforeach

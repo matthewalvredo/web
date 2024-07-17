@@ -17,7 +17,7 @@
           <div class="list-btn">
             <ul class="filter-list">
               <li>
-                <a class="btn btn-primary" href="hasil" display="{{ Auth::user()->role == '3' ? 'none' : '' }}"><i
+                <a class="btn btn-primary" href="hasil" style="display:{{ Auth::user()->role == '2' ? 'none' : '' }}"><i
                     class="fa fa-plus-circle me-2" aria-hidden="true"></i>Add New Production</a>
               </li>
             </ul>
@@ -59,7 +59,9 @@
                             @if (!$i->status)
                               <form action="{{ route('jadi.edit', $i->id) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-sm btn-success me-2">Accept</button>
+                                <button type="submit" class="btn btn-sm btn-success me-2"
+                                  style="display:{{ Auth::user()->role == '2' ? 'none' : '' }}"
+                                  {{ Auth::user()->role == '2' ? 'disabled' : '' }}>Accept</button>
                               </form>
                             @endif
                           </td>

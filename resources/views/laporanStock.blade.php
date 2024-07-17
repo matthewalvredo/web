@@ -30,14 +30,13 @@
                       <th>Quantity</th>
                       <th>Date</th>
                       <th>Status</th>
-                      <th class="no-sort">Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     @foreach ($tran as $i)
                       <tr>
                         <td>#{{ $i->id }}</td>
-                        <td>{{ $i->baku->name }}</td>
+                        <td>{{ $i->baku ? $i->baku->name : $i->jadi->name }}</td>
                         <td>{{ $i->stock }}</td>
                         <td>{{ $i->created_at->format('d M Y') }}</td>
                         <td>
@@ -45,14 +44,6 @@
                             class="badge bg-{{ $i->status == 1 ? 'success' : 'warning' }}-light text-{{ $i->status == 1 ? 'success' : 'warning' }}-light">
                             {{ $i->status == 1 ? 'Accepted' : 'Pending' }}
                           </span>
-                        </td>
-                        <td class="d-flex align-items-center">
-                          @if (!$i->status)
-                            <form action="{{ route('baku.accept', $i->id) }}" method="POST">
-                              @csrf
-                              <button type="submit" class="btn btn-sm btn-success me-2">Accept</button>
-                            </form>
-                          @endif
                         </td>
                       </tr>
                     @endforeach
@@ -150,8 +141,7 @@
                 </a>
               </h6>
             </div>
-            <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-              data-bs-parent="#accordionExample3">
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample3">
               <div class="card-body-chat">
                 <div id="checkBoxes2">
                   <div class="selectBox-cont">

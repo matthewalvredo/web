@@ -9,7 +9,7 @@ class LaporanController extends Controller
 {
   public function index()
   {
-    $tran = Transaksi::where('type', 1)->get();
+    $tran = Transaksi::with('baku', 'jadi')->get();
 
     return view('laporanstock', compact('tran'));
   }

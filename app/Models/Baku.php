@@ -9,6 +9,7 @@ class Baku extends Model
 {
   use HasFactory;
 
+  protected $table = 'bakus';
   protected $fillable = [
     'name',
     'stock',
@@ -20,6 +21,6 @@ class Baku extends Model
 
   public function transaksi()
   {
-    return $this->belongsTo(Transaksi::class, 'baku_id', 'id');
+    return $this->hasMany(Transaksi::class, 'baku_id');
   }
 }

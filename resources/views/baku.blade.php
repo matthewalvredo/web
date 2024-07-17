@@ -66,10 +66,13 @@
                         </td>
                         <td class="d-flex align-items-center">
                           @if (!$i->status)
-                            <form action="{{ route('baku.accept', $i->id) }}" method="POST">
-                              @csrf
-                              <button type="submit" class="btn btn-sm btn-success me-2">Accept</button>
-                            </form>
+                            @if (Auth::user()->role != '2')
+                              <form action="{{ route('baku.accept', $i->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-success me-2"
+                                  style="display:{{ Auth::user()->role == '2' ? 'none' : '' }}">Accept</button>
+                              </form>
+                            @endif
                           @endif
                         </td>
                       </tr>
