@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-  Jual Barang Produksi
+  Users
 @endsection
 
 @section('content')
@@ -10,10 +10,12 @@
 
   <div class="page-wrapper">
     <div class="content container-fluid">
-
       <div class="page-header">
         <div class="content-page-header">
-          <h5>List Barang Produksi</h5>
+          <h5>Users</h5>
+          <div class="list-btn">
+            <a href="{{ route('createuser') }}" class="btn btn-primary">Add User</a>
+          </div>
         </div>
       </div>
 
@@ -25,30 +27,33 @@
                 <table class="table table-stripped table-hover datatable">
                   <thead class="thead-light">
                     <tr>
-                      <th>Purchase ID</th>
-                      <th>Nama Barang</th>
-                      <th>Quantity</th>
-                      <th>Date</th>
-                      <th>Status</th>
+                      <th>ID</th>
+                      <th>Nama</th>
+                      <th>Email</th>
+                      <th>Role</th>
                       <th class="no-sort">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($jual as $i)
+                    @foreach ($users as $i)
                       <tr>
                         <td>#{{ $i->id }}</td>
+                        <input type="hidden" value="{{ $i->id }}">
                         <td>{{ $i->name }}</td>
-                        <td>{{ $i->stock }}</td>
-                        <td>{{ $i->created_at->format('d M Y') }}</td>
+                        <td>{{ $i->email }}</td>
                         <td>
-                          <span
-                            class="badge bg-{{ $i->status == 1 ? 'success' : 'warning' }}-light text-{{ $i->status == 1 ? 'success' : 'warning' }}-light">
-                            {{ $i->status == 1 ? 'Accepted' : 'Pending' }}
-                          </span>
+                          @if ($i->role == 1)
+                            Admin
+                          @elseif ($i->role == 2)
+                            Purchase
+                          @elseif ($i->role == 3)
+                            Karyawan
+                          @endif
                         </td>
                         <td class="d-flex align-items-center">
-                          <a href="{{ route('sell', $i->id) }}" class="btn btn-white btn-sm"
-                            style="display:{{ Auth::user()->role == '1' ? '' : 'none' }}">Sell</a>
+                          <ul>
+                            <a href="{{ route('edituser', $i->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                          </ul>
                         </td>
                       </tr>
                     @endforeach
@@ -59,7 +64,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 @endSection

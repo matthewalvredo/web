@@ -33,9 +33,9 @@
                 <table class="table table-stripped table-hover datatable">
                   <thead class="thead-light">
                     <tr>
-                      <th>Purchase ID</th>
-                      <th>Quantity</th>
+                      <th>ID</th>
                       <th>Nama Barang</th>
+                      <th>Produksi</th>
                       <th>Date</th>
                       <th>Status</th>
                       <th class="no-sort">Action</th>
@@ -62,6 +62,12 @@
                                 <button type="submit" class="btn btn-sm btn-success me-2"
                                   style="display:{{ Auth::user()->role == '2' ? 'none' : '' }}"
                                   {{ Auth::user()->role == '2' ? 'disabled' : '' }}>Accept</button>
+                              </form>
+                              <form action="{{ route('jadi.delete', $i->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-danger me-2"
+                                  style="display:{{ Auth::user()->role == '2' ? 'none' : '' }}"
+                                  {{ Auth::user()->role == '2' ? 'disabled' : '' }}>Delete</button>
                               </form>
                             @endif
                           </td>

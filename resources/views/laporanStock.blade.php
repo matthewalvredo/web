@@ -10,10 +10,23 @@
 
   <div class="page-wrapper">
     <div class="content container-fluid">
-
       <div class="page-header">
         <div class="content-page-header">
           <h5>Keluar Masuk Barang</h5>
+          <div class="list-btn">
+            <ul class="filter-list">
+              <li>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"
+                  style="display:{{ Auth::user()->role == '1' ? '' : 'none' }}">
+                  Delete Data by Year and Month
+                </button>
+              <li>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#filterstockmodal">
+                  Print Reports
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -38,11 +51,11 @@
                         <td>#{{ $i->id }}</td>
                         <td>{{ $i->baku ? $i->baku->name : $i->jadi->name }}</td>
                         <td>{{ $i->stock }}</td>
-                        <td>{{ $i->created_at->format('d M Y') }}</td>
+                        <td>{{ $i->updated_at->format('d M Y') }}</td>
                         <td>
                           <span
-                            class="badge bg-{{ $i->status == 1 ? 'success' : 'danger' }}-light text-{{ $i->status == 1 ? 'success' : 'danger' }}-light">
-                            {{ $i->status == 1 ? 'Barang Masuk' : 'Barang Keluar' }}
+                            class="badge bg-{{ $i->status == 1 && $i->type == 0 ? 'success' : 'danger' }}-light text-{{ $i->status == 1 && $i->type == 0 ? 'success' : 'danger' }}-light">
+                            {{ $i->status == 1 && $i->type == 0 ? 'Barang Masuk' : 'Barang Keluar' }}
                           </span>
                         </td>
                       </tr>
@@ -58,223 +71,94 @@
     </div>
   </div>
 
+  <div class="modal fade" id="filterstockmodal">
+    <div class="modal-dialog">
+      <div class="modal-content">
 
-  <div class="toggle-sidebar">
-    <div class="sidebar-layout-filter">
-      <div class="sidebar-header">
-        <h5>Filter</h5>
-        <a href="#" class="sidebar-closes"><i class="fa-regular fa-circle-xmark"></i></a>
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Filter by Year and Month</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <form id="filterstockform" action="{{ route('stock.pdf') }}" method="GET">
+            @csrf
+            <div class="form-group text-center">
+              <label for="year" class="mb-2">Select Year:</label>
+              <input type="number" id="year" name="year" class="form-control text-center mb-2"
+                value="{{ date('Y') }}" required>
+              <label for="month" class="mb-2">Select Month:</label>
+              <select id="month" name="month" class="form-control text-center" required>
+                @foreach (range(1, 12) as $month)
+                  <option value="{{ $month }}" {{ date('n') == $month ? 'selected' : '' }}>
+                    {{ date('F', mktime(0, 0, 0, $month, 10)) }}</option>
+                @endforeach
+              </select>
+              <label for="sort" class="mb-2">Sort by:</label>
+              <select id="sort" name="sort" class="form-control text-center" required>
+                <option value="baku_id">Barang</option>
+                <option value="updated_at">Tanggal</option>
+                <option value="type">Status</option>
+              </select>
+            </div>
+          </form>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button type="submit" form="filterstockform" class="btn btn-primary d-block mx-auto">Print</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+
       </div>
-      <div class="sidebar-body">
-        <form action="#" autocomplete="off">
+    </div>
+  </div>
 
-          <div class="accordion" id="accordionMain1">
-            <div class="card-header-new" id="headingOne">
-              <h6 class="filter-title">
-                <a href="javascript:void(0);" class="w-100" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                  aria-expanded="true" aria-controls="collapseOne">
-                  Vendor
-                  <span class="float-end"><i class="fa-solid fa-chevron-down"></i></span>
-                </a>
-              </h6>
-            </div>
-            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample1">
-              <div class="card-body-chat">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div id="checkBoxes1">
-                      <div class="form-custom">
-                        <input type="text" class="form-control" id="member_search1" placeholder="Search Vendor">
-                        <span><img src="assets/img/icons/search.svg" alt="img"></span>
-                      </div>
-                      <div class="selectBox-cont">
-                        <label class="custom_check w-100">
-                          <input type="checkbox" name="username">
-                          <span class="checkmark"></span> John Smith
-                        </label>
-                        <label class="custom_check w-100">
-                          <input type="checkbox" name="username">
-                          <span class="checkmark"></span> Johnny
-                        </label>
-                        <label class="custom_check w-100">
-                          <input type="checkbox" name="username">
-                          <span class="checkmark"></span> Robert
-                        </label>
-                        <label class="custom_check w-100">
-                          <input type="checkbox" name="username">
-                          <span class="checkmark"></span> Sharonda
-                        </label>
-
-                        <div class="view-content">
-                          <div class="viewall-One">
-                            <label class="custom_check w-100">
-                              <input type="checkbox" name="username">
-                              <span class="checkmark"></span> Pricilla
-                            </label>
-                            <label class="custom_check w-100">
-                              <input type="checkbox" name="username">
-                              <span class="checkmark"></span> Randall
-                            </label>
-                          </div>
-                          <div class="view-all">
-                            <a href="javascript:void(0);" class="viewall-button-One"><span class="me-2">View
-                                All</span><span><i class="fa fa-circle-chevron-down"></i></span></a>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="accordion" id="accordionMain3">
-            <div class="card-header-new" id="headingThree">
-              <h6 class="filter-title">
-                <a href="javascript:void(0);" class="w-100 collapsed" data-bs-toggle="collapse"
-                  data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                  Purchase ID
-                  <span class="float-end"><i class="fa-solid fa-chevron-down"></i></span>
-                </a>
-              </h6>
-            </div>
-            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample3">
-              <div class="card-body-chat">
-                <div id="checkBoxes2">
-                  <div class="selectBox-cont">
-                    <label class="custom_check w-100">
-                      <input type="checkbox" name="bystatus">
-                      <span class="checkmark"></span> 4905681
-                    </label>
-                    <label class="custom_check w-100">
-                      <input type="checkbox" name="bystatus">
-                      <span class="checkmark"></span> 4905682
-                    </label>
-                    <label class="custom_check w-100">
-                      <input type="checkbox" name="bystatus">
-                      <span class="checkmark"></span> 4905683
-                    </label>
-                    <label class="custom_check w-100">
-                      <input type="checkbox" name="bystatus">
-                      <span class="checkmark"></span> 4905684
-                    </label>
-                    <label class="custom_check w-100">
-                      <input type="checkbox" name="bystatus">
-                      <span class="checkmark"></span> 4905685
-                    </label>
-                    <label class="custom_check w-100">
-                      <input type="checkbox" name="bystatus">
-                      <span class="checkmark"></span> 4905686
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="accordion" id="accordionMain5">
-            <div class="card-header-new" id="headingFive">
-              <h6 class="filter-title">
-                <a href="javascript:void(0);" class="w-100 collapsed" data-bs-toggle="collapse"
-                  data-bs-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
-                  By Status
-                  <span class="float-end"><i class="fa-solid fa-chevron-down"></i></span>
-                </a>
-              </h6>
-            </div>
-            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample3">
-              <div class="card-body-chat">
-                <div id="checkBoxes2">
-                  <div class="selectBox-cont">
-                    <label class="custom_check w-100">
-                      <input type="checkbox" name="bystatus">
-                      <span class="checkmark"></span> Paid
-                    </label>
-                    <label class="custom_check w-100">
-                      <input type="checkbox" name="bystatus">
-                      <span class="checkmark"></span> Pending
-                    </label>
-                    <label class="custom_check w-100">
-                      <input type="checkbox" name="bystatus">
-                      <span class="checkmark"></span> Cancelled
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="accordion accordion-last" id="accordionMain5">
-            <div class="card-header-new" id="headingFive">
-              <h6 class="filter-title">
-                <a href="javascript:void(0);" class="w-100 collapsed" data-bs-toggle="collapse"
-                  data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-                  Payment Method
-                  <span class="float-end"><i class="fa-solid fa-chevron-down"></i></span>
-                </a>
-              </h6>
-            </div>
-            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample4">
-              <div class="card-body-chat">
-                <div id="checkBoxes3">
-                  <div class="selectBox-cont">
-                    <label class="custom_check w-100">
-                      <input type="checkbox" name="category">
-                      <span class="checkmark"></span> Cash
-                    </label>
-                    <label class="custom_check w-100">
-                      <input type="checkbox" name="category">
-                      <span class="checkmark"></span> Cheque
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="filter-buttons">
-            <button type="submit"
-              class="d-inline-flex align-items-center justify-content-center btn w-100 btn-primary">
-              Apply
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form action="{{ route('delete.byYearMonth') }}" method="POST" id="deleteForm">
+          @csrf
+          @method('DELETE')
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Delete Data</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
             </button>
-            <button type="submit"
-              class="d-inline-flex align-items-center justify-content-center btn w-100 btn-secondary">
-              Reset
-            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="year">Year</label>
+              <input type="number" class="form-control" id="year" name="year" required>
+            </div>
+            <div class="form-group">
+              <label for="month">Month</label>
+              <input type="number" class="form-control" id="month" name="month" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger">Delete</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 
+  <script>
+    $(document).ready(function() {
+      $('#deleteForm').on('submit', function(event) {
+        var year = $('#year').val();
+        var month = $('#month').val();
 
-  <div class="modal custom-modal fade" id="delete_modal" role="dialog">
-    <div class="modal-dialog modal-dialog-centered modal-md">
-      <div class="modal-content">
-        <div class="modal-body">
-          <div class="form-header">
-            <h3>Delete Purchases</h3>
-            <p>Are you sure want to delete?</p>
-          </div>
-          <div class="modal-btn delete-action">
-            <div class="row">
-              <div class="col-6">
-                <button type="reset" data-bs-dismiss="modal"
-                  class="w-100 btn btn-primary paid-continue-btn">Delete</button>
-              </div>
-              <div class="col-6">
-                <button type="submit" data-bs-dismiss="modal"
-                  class="w-100 btn btn-primary paid-cancel-btn">Cancel</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+        if (!year || !month) {
+          alert('Year and month are required.');
+          event.preventDefault();
+        }
+      });
+    });
+  </script>
 @endSection

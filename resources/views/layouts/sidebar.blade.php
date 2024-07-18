@@ -38,6 +38,7 @@
           <ul>
             <li><a href="storebaku" class="{{ request()->is('storebaku') ? 'active' : '' }}">Bahan Baku</a></li>
             <li><a href="storejadi" class="{{ request()->is('storejadi') ? 'active' : '' }}">Barang Jadi</a> </li>
+            <li><a href="users" class="{{ request()->is('users') ? 'active' : '' }}">Users</a></li>
           </ul>
         </li>
       </ul>

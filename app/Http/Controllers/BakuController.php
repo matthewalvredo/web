@@ -33,4 +33,12 @@ class BakuController extends Controller
 
     return redirect()->route('baku')->with('success', 'Item added successfully!');
   }
+
+  public function delete($id)
+  {
+    $baku = Transaksi::findorfail($id);
+    $baku->delete();
+
+    return redirect()->route('baku')->with('success', 'Item added successfully!');
+  }
 }

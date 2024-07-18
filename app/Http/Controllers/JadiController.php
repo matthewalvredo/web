@@ -37,4 +37,12 @@ class JadiController extends Controller
 
     return redirect()->route('jadi')->with('success', 'Item added successfully!');
   }
+
+  public function delete($id)
+  {
+    $jadi = Transaksi::findorfail($id);
+    $jadi->delete();
+
+    return redirect()->route('jadi')->with('success', 'Item added successfully!');
+  }
 }

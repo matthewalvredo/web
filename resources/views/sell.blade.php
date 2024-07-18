@@ -42,7 +42,7 @@
                           <div class="input-block mb-3">
                             <label>Price <span class="text-danger">*</span></label>
                             <input type="number" name="price" class="form-control"
-                              placeholder="Last Price Rp. {{ $i->price }}">
+                              placeholder="Last Price Rp. {{ $i->price }}" required>
                           </div>
                         @endif
                       @endforeach
@@ -53,7 +53,7 @@
                       <div class="input-block mb-3">
                         <label>Quantity to Sell <span class="text-danger"> *</span></label>
                         <input type="number" name="quantity" class="form-control" max="{{ $jual->stock }}"
-                          placeholder="Enter Quantity">
+                          placeholder="Enter Quantity" required>
                       </div>
                     </div>
                   </div>

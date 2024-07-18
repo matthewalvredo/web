@@ -72,6 +72,11 @@
                                 <button type="submit" class="btn btn-sm btn-success me-2"
                                   style="display:{{ Auth::user()->role == '2' ? 'none' : '' }}">Accept</button>
                               </form>
+                              <form action="{{ route('baku.delete', $i->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-danger me-2"
+                                  style="display:{{ Auth::user()->role == '2' ? 'none' : '' }}">Delete</button>
+                              </form>
                             @endif
                           @endif
                         </td>
