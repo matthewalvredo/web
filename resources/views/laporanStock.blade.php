@@ -41,8 +41,8 @@
                         <td>{{ $i->created_at->format('d M Y') }}</td>
                         <td>
                           <span
-                            class="badge bg-{{ $i->status == 1 ? 'success' : 'warning' }}-light text-{{ $i->status == 1 ? 'success' : 'warning' }}-light">
-                            {{ $i->status == 1 ? 'Accepted' : 'Pending' }}
+                            class="badge bg-{{ $i->status == 1 ? 'success' : 'danger' }}-light text-{{ $i->status == 1 ? 'success' : 'danger' }}-light">
+                            {{ $i->status == 1 ? 'Barang Masuk' : 'Barang Keluar' }}
                           </span>
                         </td>
                       </tr>

@@ -47,8 +47,8 @@
                           </span>
                         </td>
                         <td class="d-flex align-items-center">
-                          <a href="{{ route('sell', $i->id) }}" class="btn btn-primary btn-sm me-2"
-                            style="display:{{ Auth::user()->role == '1' ? '' : 'none' }}">Edit</a>
+                          <a href="{{ route('sell', $i->id) }}" class="btn btn-primary btn-sm"
+                            style="display:{{ Auth::user()->role == '1' ? '' : 'none' }}">Sell</a>
                         </td>
                       </tr>
                     @endforeach

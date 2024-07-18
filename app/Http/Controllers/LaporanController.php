@@ -16,7 +16,7 @@ class LaporanController extends Controller
 
   public function index2()
   {
-    $tran = Transaksi::where('type', 0)->get();
+    $tran = Transaksi::with('baku', 'jadi')->where('type', 0)->get();
 
     return view('laporancredit', compact('tran'));
   }

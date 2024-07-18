@@ -20,14 +20,15 @@ class JadiController extends Controller
   public function edit($id)
   {
     $jadi = Transaksi::findorfail($id);
+    $baku = Transaksi::findorfail($id + 1);
 
     $temp = Jadi::findorfail($jadi->jadi_id);
     $temp->stock += $jadi->stock;
     $temp->status = 1;
     $temp->save();
 
-    $teb = Baku::findorfail($temp->id);
-    $teb->stock -= $jadi->stock;
+    $teb = Baku::findorfail($baku->baku_id);
+    $teb->stock -= $baku->stock;
     $teb->status = 1;
     $teb->save();
 

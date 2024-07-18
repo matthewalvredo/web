@@ -28,18 +28,19 @@ class JualController extends Controller
 
   public function svsell(Request $request)
   {
-    $temp = Jadi::findorfail($request->name);
+    $temp = Jadi::findorfail($request->id);
     $temp->update([
-      'stock' => $request->stock,
+      'stock' => $temp->stock - $request->quantity,
+      'price' => $request->price
     ]);
 
     $tr = new Transaksi();
     $tr->baku_id = '0';
     $tr->suplier_id = '0';
-    $tr->jadi_id = $request->name;
-    $tr->type = '1';
-    $tr->stock = $request->stock;
-    $tr->totalprice = $request->price * $request->stock;
+    $tr->jadi_id = $request->id;
+    $tr->type = '0';
+    $tr->stock = $request->quantity;
+    $tr->totalprice = $request->price * $request->quantity;
     $tr->status = '0';
 
     $tr->save();

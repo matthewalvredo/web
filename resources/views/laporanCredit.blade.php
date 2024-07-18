@@ -37,15 +37,15 @@
                     @foreach ($tran as $i)
                       <tr>
                         <td>#{{ $i->id }}</td>
-                        <td>{{ $i->baku->name }}</td>
+                        <td>{{ $i->baku ? $i->baku->name : $i->jadi->name }}</td>
                         <td style="text-align: right">{{ number_format($i->stock, 0, ',', '.') }} gulung</td>
-                        <td>Rp. {{ number_format($i->baku->price, 0, ',', '.') }}</td>
+                        <td>Rp. {{ number_format($i->baku ? $i->baku->price : $i->jadi->price, 0, ',', '.') }}</td>
                         <td>Rp. {{ number_format($i->totalprice, 0, ',', '.') }}</td>
                         <td>{{ $i->created_at->format('d M Y') }}</td>
                         <td>
                           <span
-                            class="badge bg-{{ $i->status == 1 ? 'success' : 'warning' }}-light text-{{ $i->status == 1 ? 'success' : 'warning' }}-light">
-                            {{ $i->status == 1 ? 'Accepted' : 'Pending' }}
+                            class="badge bg-{{ $i->status == 1 ? 'success' : 'danger' }}-light text-{{ $i->status == 1 ? 'success' : 'danger' }}-light">
+                            {{ $i->status == 1 ? 'Buy Item' : 'Sell Item' }}
                           </span>
                         </td>
                       </tr>

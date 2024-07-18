@@ -29,6 +29,7 @@
                         @if ($i->id == $jual->id)
                           <div class="input-block mb-3">
                             <label>Product Name <span class="text-danger">*</span></label>
+                            <input type="text" name="id" class="form-control" value="{{ $i->id }}" hidden>
                             <input type="text" name="name" class="form-control" value="{{ $i->name }}"
                               disabled>
                           </div>
@@ -37,6 +38,11 @@
                             <input type="text" name="stock" class="form-control" value="{{ $i->stock }}"
                               disabled>
                             <input type="hidden" name="price" value="{{ $i->price }}">
+                          </div>
+                          <div class="input-block mb-3">
+                            <label>Price <span class="text-danger">*</span></label>
+                            <input type="number" name="price" class="form-control"
+                              placeholder="Last Price Rp. {{ $i->price }}">
                           </div>
                         @endif
                       @endforeach
