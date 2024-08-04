@@ -53,10 +53,17 @@
                         <td>{{ $i->stock }}</td>
                         <td>{{ $i->updated_at->format('d M Y') }}</td>
                         <td>
-                          <span
-                            class="badge bg-{{ $i->status == 1 && $i->type == 0 ? 'success' : 'danger' }}-light text-{{ $i->status == 1 && $i->type == 0 ? 'success' : 'danger' }}-light">
-                            {{ $i->status == 1 && $i->type == 0 ? 'Barang Masuk' : 'Barang Keluar' }}
-                          </span>
+                          @if ($i->jadi_id != 0)
+                            <span
+                              class="badge bg-{{ $i->status == 2 ? 'warning' : 'success' }}-light text-{{ $i->status == 2 ? 'warning' : 'success' }}-light">
+                              {{ $i->status == 2 ? 'Barang Terjual' : 'Barang Masuk' }}
+                            </span>
+                          @else
+                            <span
+                              class="badge bg-{{ $i->status == 1 && $i->type == 0 ? 'success' : 'danger' }}-light text-{{ $i->status == 1 && $i->type == 0 ? 'success' : 'danger' }}-light">
+                              {{ $i->status == 1 && $i->type == 0 ? 'Barang Masuk' : 'Barang Keluar' }}
+                            </span>
+                          @endif
                         </td>
                       </tr>
                     @endforeach

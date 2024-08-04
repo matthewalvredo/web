@@ -71,8 +71,8 @@
                         <td>{{ $i->updated_at->format('d M Y') }}</td>
                         <td>
                           <span
-                            class="badge bg-{{ $i->jadi_id == 1 && $i->type == 0 ? 'success' : 'danger' }}-light text-{{ $i->jadi_id == 1 && $i->type == 0 ? 'success' : 'danger' }}-light">
-                            {{ $i->jadi_id == 1 && $i->type == 0 ? 'Sell Item' : 'Buy Item' }}
+                            class="badge bg-{{ $i->jadi_id != 0 && $i->type == 0 ? 'success' : 'danger' }}-light text-{{ $i->jadi_id != 0 && $i->type == 0 ? 'success' : 'danger' }}-light">
+                            {{ $i->jadi_id != 0 && $i->type == 0 ? 'Sell Item' : 'Buy Item' }}
                           </span>
                         </td>
                       </tr>

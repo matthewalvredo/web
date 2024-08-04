@@ -41,7 +41,7 @@ class JualController extends Controller
     $tr->type = '0';
     $tr->stock = $request->quantity;
     $tr->totalprice = $request->price * $request->quantity;
-    $tr->status = '1';
+    $tr->status = '2';
 
     $tr->save();
 

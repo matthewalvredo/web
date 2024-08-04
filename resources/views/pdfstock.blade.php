@@ -43,7 +43,19 @@
           {{-- <td>{{ $item->baku_id == 0 ? $item->baku->name : $item->jadi->name }}</td> --}}
           <td>{{ $item->baku ? $item->baku->name : $item->jadi->name }}</td>
           <td style="text-align: center">{{ $item->stock }}</td>
-          <td style="text-align: center">{{ $item->type == 0 ? 'Masuk' : 'Keluar' }}</td>
+          <td style="text-align: center">
+            @if ($item->jadi_id != 0)
+              @if ($item->status == 2)
+                Terjual
+              @else
+                Masuk
+              @endif
+            @elseif($item->baku_id != 0 && $item->type == 0)
+              Masuk
+            @else
+              Keluar
+            @endif
+          </td>
           <td>{{ $item->updated_at->format('d-m-Y') }}</td>
         </tr>
       @endforeach
